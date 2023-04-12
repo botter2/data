@@ -1,0 +1,22 @@
+﻿烟台人社水印安装部署
+-----因水印对操作系统有要求，需要先确定当前操作系统是centos还是red hat。
+---centos-7 步骤如下:
+1、先从公司svn：软件项目部/工具类/烟台人社水印/ 获取 watermarker_py_client-centos7文件。
+2、部署位置于：10.115.11.122：/usr/local/watermarker(文件名可随意)
+3、先授可执行权限： chmod +x watermarker_py_client-centos7
+4、执行 : ./watermarker_py_client-centos7 -e prod-ytrs   执行完后确认无误可CTRL+C 结束 同时，-e prod-ytrs 根据实际项目来。
+5、执行 ：nohup ./watermarker_py_client-centos7 -e prod-ytrs > /dev/null 2>&1 &   -e prod-ytrs 根据实际项目来
+6、登陆电子档案系统获取图片地址： 
+host:port/dap-vtrs/ossproxy/图片地址？time=******。
+host:port/fileproxy/marker/<图⽚路径即origiFilePath>/?marker=SGGvL55HeUpCZbY1m1gslg
+第一行为电子档案地址，区别在于端口后的参数名以及图片后面跟得marker。
+7、同时还需要配置文件服务器中的nginx： 
+	location /dap-ytrs/fileproxy/ {
+           proxy_pass http://127.0.0.1:7002/fileproxy/;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           client_max_body_size 20M;
+        }
+-----实际配置按照实际项目为准，如果没配置nginx，可先按照第六步的第二个链接，将7002端口放入也可提前测试水印展示效果。
+同时，电子档案系统也要进行相应的升级。可提前联系研发提供文件服务器的配置、操作系统信息、电子档案系统的相关信息。

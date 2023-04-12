@@ -1,0 +1,33 @@
+安装
+1、从官网下载安装程序，默认安装就可以，安装完成后从开始菜单或者桌面右键找到gitbash，弹出个命令窗口说明安装成功。
+2、安装完成后，输入：
+git config --global user.name "your Name" 
+git config --golbal user.email "email@example.com"
+---前提：已经在官网创建git用户和邮箱。
+---本地库
+1、创建版本库（repository），命令和liunx基本相同，mkdir repository。
+2、通过git init 将目录变成可以管理的仓库；
+3、然后在 repository 目录下放置个文档或者文件。
+4、执行 git add readme **(刚才放的文件或者文档)，将文件添加至仓库。
+5、执行git commit -m "提交文件" 进行提交。
+---远程库
+1、登陆GitHub，然后，在右上角找到“Create a new repo”按钮，创建一个新的仓库：
+2、在 repository name 填入你的库名，其他默认，点击create repository 完成创建。
+3、在本地执行 ，git remote add origin git@github.com:刚才自己建的库名/learngit.git
+4、git push -u origin master,仅限第一次 。
+---后续提交步骤
+1、git add readme **需要上传的文件。
+2、git commit -m "提交文件" 
+3、git push origin master。
+----------------------------------
+git remote -v  查看远程库的信息。
+
+ssh警告：
+当你第一次使用push连接GitHub时，会提示 
+The authenticity of host 'github.com (xx.xx.xx.xx)' can't be established.
+RSA key fingerprint is xx.xx.xx.xx.xx.
+Are you sure you want to continue connecting (yes/no)?
+这是因为Git使用SSH连接，而SSH连接在第一次验证GitHub服务器的Key时，需要你确认GitHub的Key的指纹信息是否真的来自GitHub的服务器，输入yes回车即可。
+Git会输出一个警告，告诉你已经把GitHub的Key添加到本机的一个信任列表里了
+Warning: Permanently added 'github.com' (RSA) to the list of known hosts.
+这个警告只会出现一次，后面的操作就不会有任何警告了。
